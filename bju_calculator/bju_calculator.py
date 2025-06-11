@@ -1,6 +1,6 @@
-﻿import tkinter as tk
+import tkinter as tk
 from tkinter import ttk, messagebox
-from PIL import Image, ImageTk as pilt
+from PIL import Image, ImageTk
 from datetime import datetime
 import os
 
@@ -12,11 +12,13 @@ MEALS_FILE = "meals.txt"
 def set_background(root, image_path):
     image = Image.open(image_path)
     image = image.resize((root.winfo_screenwidth(), root.winfo_screenheight()))
-    bg_image = pilt.PhotoImage(image)
+    bg_image = ImageTk.PhotoImage(image)
 
     bg_label = tk.Label(root, image=bg_image)
-    bg_label.image = bg_image  # чтобы не удалялся сборщиком мусора
+    bg_label.image = bg_image
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+    bg_label.lower()  # отправляем на задний план
+    root.bg_image = bg_image  # держим ссылку
 
     return bg_label
 
